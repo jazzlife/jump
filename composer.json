@@ -1,0 +1,44 @@
+{
+    "name": "laravel/lumen",
+    "description": "The Laravel Lumen Framework.",
+    "keywords": ["framework", "laravel", "lumen"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/lumen-framework": "5.3.*",
+        "vlucas/phpdotenv": "~2.2",
+        "sumanion/laravel-cloudflare": "^1.0",
+        "illuminate/mail": "^5.3",
+        "guzzlehttp/guzzle": "^6.2",
+        "menarasolutions/geographer": "^0.3.1",
+        "league/flysystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "~5.0",
+        "mockery/mockery": "~0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Support/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "database/"
+        ]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php -r \"file_exists('.env') || (copy('.env.example', '.env') && exec('php artisan key:generate'));\""
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
