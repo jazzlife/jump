@@ -1112,7 +1112,11 @@
   "MDL": {
     "name": "Moldovan Leu",
     "fractionSize": 2,
-    "symbol": null,
+    "symbol": {
+      "grapheme": "Lei",
+      "template": "1 $",
+      "rtl": false
+    },
     "uniqSymbol": null
   },
   "MGA": {

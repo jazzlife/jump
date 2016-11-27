@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Cache;
 
 class Asset
 {
+    /** Specifies how long, in seconds, assets should be cached. */
+    const CACHE_TIME = 31536000;
+
     /**
      * Returns full URL to an asset.
      *
@@ -81,7 +84,7 @@ class Asset
      *
      * @param  string $dir
      * @param  bool   $fresh
-     * @param  string $pattern
+     * @param  string $prefix
      *
      * @return string
      */
@@ -232,8 +235,8 @@ class Asset
                     $path . crc32(filemtime($file)) . '-' . basename($file),
                     file_get_contents($file), [
                         'visibility'   => 'public',
-                        'Expires'      => gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000),
-                        'CacheControl' => 'public, max-age=31536000',
+                        'Expires'      => gmdate('D, d M Y H:i:s \G\M\T', time() + static::CACHE_TIME),
+                        'CacheControl' => 'public, max-age=' . static::CACHE_TIME,
                     ]
                 );
             });

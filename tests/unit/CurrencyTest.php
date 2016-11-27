@@ -33,7 +33,7 @@ class CurrencyTest extends TestCase
         $this->assertSame('$', Currency::symbol('USD'));
         $this->assertSame('€', Currency::symbol('EUR'));
         $this->assertSame('FOO', Currency::symbol('FOO'));
-        $this->assertSame('MDL', Currency::symbol('MDL'));
+        $this->assertSame('Lei', Currency::symbol('MDL'));
     }
 
     public function test_it_can_return_template_of_a_currency()
@@ -92,9 +92,9 @@ class CurrencyTest extends TestCase
         $this->assertSame('€352.50', Currency::format(235, 'EUR'));
         $this->assertSame('CA$430.50', Currency::format(123, 'CAD'));
         $this->assertSame('CA$822.50', Currency::format(235, 'CAD'));
-        $this->assertSame('123.00 MDL', Currency::format(123, 'MDL'));
-        $this->assertSame('235.00 MDL', Currency::format(235, 'MDL'));
-        $this->assertSame('10,000.99 MDL', Currency::format(10000, 'MDL', true));
-        $this->assertSame('100,000,000.99 MDL', Currency::format(100000000, 'MDL', true));
+        $this->assertSame('123.00 Lei', Currency::format(123, 'MDL'));
+        $this->assertSame('235.00 Lei', Currency::format(235, 'MDL'));
+        $this->assertSame('10,000.99 Lei', Currency::format(10000, 'MDL', 'USD', true));
+        $this->assertSame('100,000,000.99 Lei', Currency::format(100000000, 'MDL', 'USD', true));
     }
 }
