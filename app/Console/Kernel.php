@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\GenerateApplicationKey::class
+        Commands\GenerateApplicationKey::class,
+        Commands\PushAssets::class,
     ];
 
     /**
