@@ -106,14 +106,14 @@ $app->group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => 'token:strict',
 ], function ($app) {
-    require __DIR__.'/../routes/api.php';
+    require __DIR__ . '/../routes/api.php';
 });
 
 $app->group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => 'token',
 ], function ($app) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 
