@@ -26,7 +26,7 @@ class Asset
             $id = crc32(filemtime($real_path));
         }
 
-        if ($cdn) {
+        if (config('assets.use_cdn') and $cdn) {
 
             $cdn_url = config('assets.cdn_url');
 
