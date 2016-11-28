@@ -21,7 +21,7 @@ class CreateOptionsTable extends Migration
             $table->string('entity_type')->index();
             $table->string('name')->index();
             $table->string('type')->nullable();
-            $table->text('value');
+            $table->text('value')->nullable();
 
             $table->timestamps();
 
