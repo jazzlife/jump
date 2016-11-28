@@ -4,11 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductOption extends Model
+class Option extends Model
 {
+    /** @var string */
+    protected $table = 'options';
+
     /** @var array */
     protected $fillable = [
-        'product_id',
+        'entity_id',
+        'entity_type',
         'name',
         'type',
         'value'

@@ -2,18 +2,18 @@
 
 namespace App\Support\Features;
 
-use App\ProductOption;
+use App\Option;
 
-trait ManagesProductOptions
+trait ManagesOptions
 {
     /**
-     * A product may have many options.
+     * An entity may have many options.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function options()
     {
-        return $this->hasMany(ProductOption::class);
+        return $this->hasMany(Option::class, 'entity_id')->orderBy('id', 'desc');
     }
 
     /**
@@ -54,17 +54,19 @@ trait ManagesProductOptions
 
         if ($option) {
 
-            $option->name  = $fields['name'];
-            $option->type  = $fields['type'];
-            $option->value = $fields['value'];
+            $option->entity_type = $fields['entity_type'];
+            $option->name        = $fields['name'];
+            $option->type        = $fields['type'];
+            $option->value       = $fields['value'];
 
             $option->save();
         } else {
 
             $this->options()->create([
-                'name'  => $fields['name'],
-                'type'  => $fields['type'],
-                'value' => $fields['value']
+                'entity_type' => $fields['entity_type'],
+                'name'        => $fields['name'],
+                'type'        => $fields['type'],
+                'value'       => $fields['value']
             ]);
         }
 
@@ -91,6 +93,9 @@ trait ManagesProductOptions
             } else if (is_float($value)) {
 
                 $type = 'float';
+            } else if (is_bool($value)) {
+
+                $type = 'bool';
             } else {
 
                 $type = 'string';
@@ -108,9 +113,10 @@ trait ManagesProductOptions
         }
 
         return [
-            'name'  => $fields['name'],
-            'type'  => $type,
-            'value' => $value
+            'entity_type' => $fields['entity_type'] ?? get_class($this),
+            'name'        => $fields['name'],
+            'type'        => $type,
+            'value'       => $value
         ];
     }
 
@@ -167,11 +173,11 @@ trait ManagesProductOptions
     /**
      * Formats the value of an option.
      *
-     * @param  \App\ProductOption $option
+     * @param  \App\Option $option
      *
      * @return mixed
      */
-    public function returnOptionValue(ProductOption $option)
+    public function returnOptionValue(Option $option)
     {
         switch ($option->type) {
             case 'string':
@@ -186,16 +192,80 @@ trait ManagesProductOptions
             case 'real':
                 return (float)$option->value;
 
-            case 'binary':
-                return (binary)$option->value;
+            case 'bool':
+            case 'boolean':
+                return (bool)$option->value;
 
             case 'array':
                 return json_decode($option->value, true) ?: [];
 
             case 'object':
                 return json_decode($option->value) ?: new stdClass;
+
+            case 'binary':
+                return (binary)$option->value;
         }
 
         return (string)$option->value;
+    }
+
+    /**
+     * Builds a query to find all entities of a given type.
+     *
+     * @param  mixed       $name
+     * @param  mixed       $value
+     * @param  null|string $class
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function withOption($name, $value = null, $class = null)
+    {
+        $class = $class ?: get_called_class();
+        $query = Option::where('entity_type', $class);
+
+        if (is_callable($name)) {
+
+            $name($query);
+        } else {
+
+            $query->where('name', (string)$name);
+        }
+
+        if ($value) {
+
+            $query->where('value', (string)$value);
+        }
+
+        $ids = $query->get()->map(function ($option) { return $option->entity_id; })->all();
+
+        return (new $class)->with('options')->whereIn('id', $ids)->orderBy('id', 'desc');
+    }
+
+    /**
+     * Returns all entities of a given type.
+     *
+     * @param  mixed       $name
+     * @param  mixed       $value
+     * @param  null|string $class
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function allWithOption($name, $value = null, $class = null)
+    {
+        return static::withOption($name, $value, $class)->get();
+    }
+
+    /**
+     * Returns an entity of a given type.
+     *
+     * @param  mixed       $name
+     * @param  mixed       $value
+     * @param  null|string $class
+     *
+     * @return null|\App\Entity
+     */
+    public static function oneWithOption($name, $value = null, $class = null)
+    {
+        return static::withOption($name, $value, $class)->first();
     }
 }
