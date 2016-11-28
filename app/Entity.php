@@ -28,7 +28,7 @@ class Entity extends Model
     public function __construct(array $attributes = [])
     {
         $this->setRawAttributes([
-            'key'  => random_int(1000000000, 9000000000),
+            'key'  => random_int(100000000000, 900000000000),
             'type' => get_class($this)
         ]);
 
