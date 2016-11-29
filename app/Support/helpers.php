@@ -162,3 +162,13 @@ function asset()
 {
     return app('asset');
 }
+
+/**
+ * Returns Meta instance.
+ *
+ * @return \App\Support\Meta
+ */
+function meta()
+{
+    return app('meta')->make('AppMeta');
+}

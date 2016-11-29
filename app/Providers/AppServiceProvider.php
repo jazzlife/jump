@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Data\Data;
+use App\Meta\Meta;
 use App\Support\Asset;
 use App\Support\Currency;
 use App\Support\RequestToken;
@@ -44,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('asset', function () {
             return new Asset;
+        });
+
+        $this->app->singleton('meta', function () {
+            return new Meta;
         });
     }
 }
