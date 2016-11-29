@@ -1,7 +1,8 @@
 
-const del    = require('del');
-const gulp   = require('gulp');
-const elixir = require('laravel-elixir');
+const del        = require('del');
+const gulp       = require('gulp');
+const elixir     = require('laravel-elixir');
+const poststylus = require('poststylus');
 
 require('laravel-elixir-vue-2');
 
@@ -47,7 +48,16 @@ elixir(mix => {
      * Compile Stylus files.
      */
 
-    mix.stylus('app.styl');
+    mix.stylus('app.styl', null, {
+        use: [
+            require('rupture')(),
+            poststylus([
+                require('lost'),
+                require('css-mqpacker'),
+                require('autoprefixer')({ remove: false })
+            ])
+        ]
+    });
 
     /**
      * Compile JavaScript files.
