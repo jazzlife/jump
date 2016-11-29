@@ -4,11 +4,11 @@ namespace App\Data;
 
 class Data
 {
-    /** @var null|array */
-    protected $cachedStore;
+    /** @var array */
+    protected $childs = [];
 
-    /** @var null|array */
-    protected $cachedTranslation;
+    /** @var array */
+    protected $cache = [];
 
     /**
      * Creates a custom store for the application.
@@ -31,23 +31,20 @@ class Data
     }
 
     /**
-     * Caches custom data for the current request.
+     * Caches custom data values for the current request.
      *
      * @param  string $type
      *
-     * @return string
+     * @return array
      */
-    public function build(string $type):string
+    public function build(string $type):array
     {
-        $name = strtolower($type);
-        $cache = 'cached' . ucfirst($name);
+        if (!isset($this->cache[$type])) {
 
-        if (null === $this->{$cache}) {
-
-            $this->{$cache} = (array)$this->{$name}();
+            $this->cache[$type] = (array)$this->{$type}();
         }
 
-        return $cache;
+        return $this->cache[$type];
     }
 
     /**
@@ -61,9 +58,9 @@ class Data
      */
     public function get($type, string $path, string $default = null)
     {
-        $cache = $this->build($type);
+        $this->build($type);
 
-        return array_get($this->{$cache}, $path, $default);
+        return array_get($this->cache[$type], $path, $default);
     }
 
     /**
@@ -75,9 +72,9 @@ class Data
      */
     public function set($type, string $path, $value)
     {
-        $cache = $this->build($type);
+        $this->build($type);
 
-        array_set($this->{$cache}, $path, $value);
+        array_set($this->cache[$type], $path, $value);
     }
 
     /**
@@ -90,13 +87,37 @@ class Data
      */
     public function remove($type, string $path)
     {
-        $cache = $this->build($type);
+        $this->build($type);
 
-        array_forget($this->{$cache}, $path);
+        array_forget($this->cache[$type], $path);
     }
 
     /**
-     * Returns the custom data as a JSON string.
+     * Creates an array of custom data values.
+     *
+     * @param  string $type
+     * @param  bool   $computed
+     *
+     * @return array
+     */
+    public function toArray($type, bool $computed = true):array
+    {
+        $data = $this->build($type);
+
+        if (!$computed) {
+            return $data;
+        }
+
+        collect($this->childs)->each(function ($child) use (&$data, $type) {
+
+            $data = array_replace_recursive($data, $child->toArray($type));
+        });
+
+        return $data;
+    }
+
+    /**
+     * Returns the custom data values as a JSON string.
      *
      * @param  string $type
      * @param  bool   $format
@@ -105,13 +126,11 @@ class Data
      */
     public function toJson($type, bool $format = false):string
     {
-        $cache = $this->build($type);
-
-        return json_encode($this->{$cache}, $format ? JSON_PRETTY_PRINT : 0);
+        return json_encode($this->toArray($type), $format ? JSON_PRETTY_PRINT : 0);
     }
 
     /**
-     * Manages custom data instances.
+     * Manages child data instances.
      *
      * @param  string $child
      *
@@ -121,11 +140,11 @@ class Data
     {
         $child = '\\App\\Data\\' . $child;
 
-        if (!isset($this->instances[$child])) {
+        if (!isset($this->childs[$child])) {
 
-            $this->instances[$child] = new $child;
+            $this->childs[$child] = new $child;
         }
 
-        return $this->instances[$child];
+        return $this->childs[$child];
     }
 }

@@ -134,6 +134,16 @@ function url_to(...$arguments):string
 }
 
 /**
+ * Returns data instance.
+ *
+ * @return \App\Data\Data
+ */
+function data()
+{
+    return app('data');
+}
+
+/**
  * Returns Currency instance.
  *
  * @return \App\Support\Currency
@@ -170,5 +180,5 @@ function asset()
  */
 function meta()
 {
-    return app('meta')->make('AppMeta');
+    return app('meta');
 }

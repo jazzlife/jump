@@ -5,7 +5,7 @@ namespace App\Meta;
 class Meta
 {
     /** @var array */
-    protected $instances = [];
+    protected $childs = [];
 
     /** @var array */
     protected $fields = [];
@@ -53,9 +53,6 @@ class Meta
      */
     public function __construct()
     {
-        $this->fields['og:type'] = [ 'content' => 'website', 'type' => 'opengraph' ];
-        $this->fields['og:url']  = [ 'content' => app('request')->fullUrl(), 'type' => 'opengraph' ];
-
         $this->init();
     }
 
@@ -151,6 +148,29 @@ class Meta
     }
 
     /**
+     * Returns all meta fields as an array.
+     *
+     * @param  bool   $computed
+     *
+     * @return array
+     */
+    public function fields(bool $computed = true):array
+    {
+        if (!$computed) {
+            return $this->fields;
+        }
+
+        $fields = $this->fields;
+
+        collect($this->childs)->each(function ($child) use (&$fields) {
+
+            $fields = array_replace($fields, $child->fields());
+        });
+
+        return $fields;
+    }
+
+    /**
      * Creates HTML code to represent all meta field.
      *
      * @return string
@@ -159,7 +179,7 @@ class Meta
     {
         $html = '';
 
-        collect($this->fields)->each(function ($field, $name) use (&$html) {
+        collect($this->fields())->each(function ($field, $name) use (&$html) {
 
             if ($field['type'] === 'opengraph' or $field['type'] === 'og') {
 
@@ -177,7 +197,7 @@ class Meta
     }
 
     /**
-     * Manages custom meta instances.
+     * Manages child meta instances.
      *
      * @param  string $child
      *
@@ -187,11 +207,11 @@ class Meta
     {
         $child = '\\App\\Meta\\' . $child;
 
-        if (!isset($this->instances[$child])) {
+        if (!isset($this->childs[$child])) {
 
-            $this->instances[$child] = new $child;
+            $this->childs[$child] = new $child;
         }
 
-        return $this->instances[$child];
+        return $this->childs[$child];
     }
 }
