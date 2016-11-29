@@ -11,4 +11,4 @@
 |
 */
 
-//
+$app->get('/', 'PageController@index');

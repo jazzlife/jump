@@ -11,6 +11,9 @@ class AppMeta extends Meta
      */
     public function init()
     {
+        $this->type = 'website';
+        $this->url  = app('request')->fullUrl();
+
         //
     }
 }
