@@ -182,3 +182,21 @@ function meta()
 {
     return app('meta');
 }
+
+/**
+ * Creates URLs to CDNJS depending on current environment.
+ *
+ * @param  string $url
+ *
+ * @return string
+ */
+function cdnjs(string $url):string
+{
+    $url = preg_replace('/\.min\.(js|css)$/i', '.$1', $url);
+
+    if (!app()->environment('production')) {
+        return $url;
+    }
+
+    return preg_replace('/\.(js|css)$/i', '.min.$1', $url);
+}
