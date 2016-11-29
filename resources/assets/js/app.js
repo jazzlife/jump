@@ -1,0 +1,4 @@
+
+/*
+ * Main Application's Scripts.
+ */
