@@ -9,8 +9,6 @@ class PageController extends Controller
      */
     public function __construct()
     {
-        meta()->token = app('request-token')->get();
-
         meta()->make();
         data()->make();
     }

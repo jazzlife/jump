@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eb92560f44fafed0f31eebb011819e39",
-    "content-hash": "c0036f6f612d48903e301c6fde9c5993",
+    "hash": "6a2132551a5d48daf482c40b772a770a",
+    "content-hash": "19242fdccbdcf9d7949d0927d702e9aa",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1434,6 +1434,54 @@
             "description": "The Illuminate View package.",
             "homepage": "https://laravel.com",
             "time": "2016-10-24 18:18:15"
+        },
+        {
+            "name": "jaybizzle/crawler-detect",
+            "version": "v1.2.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+                "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
+                "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\CrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "m@rkbee.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+            "keywords": [
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "php crawler detect"
+            ],
+            "time": "2016-11-25 21:32:14"
         },
         {
             "name": "laravel/lumen-framework",
