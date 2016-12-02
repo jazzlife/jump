@@ -11,4 +11,10 @@
 |
 */
 
-$app->get('/', 'PageController@index');
+$pages = [
+    '/' => 'index',
+];
+
+collect($pages)->each(function ($page, $path) use ($app) {
+    $app->get($path, "PageController@{$page}");
+});
