@@ -20,9 +20,9 @@ trait CreatesEntities
      * @param  mixed  $label
      * @param  array  $options
      *
-     * @return \App\Entity
+     * @return bool
      */
-    public static function build($class = null, $label = null, array $options = [])
+    public static function build($class = null, $label = null, array $options = []):bool
     {
         if (is_array($class)) {
 
@@ -51,7 +51,9 @@ trait CreatesEntities
             throw new Exception("[{$class}] is missing required options: [{$missing}]");
         }
 
-        DB::transaction(function () use ($object, $class, $label, $options) {
+        $created = false;
+
+        DB::transaction(function () use ($object, $class, $label, $options, &$created) {
 
             $object->type  = $class;
             $object->label = $label;
@@ -68,8 +70,10 @@ trait CreatesEntities
             });
 
             $object->options()->saveMany($options->values()->all());
+
+            $created = true;
         });
 
-        return $object;
+        return $created;
     }
 }

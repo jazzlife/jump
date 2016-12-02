@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 abstract class Model extends BaseModel
 {
     /**
-     * Specify that the ID is not incrementing.
+     * Specify that the ID is non-incrementing.
      *
      * @var bool
      */

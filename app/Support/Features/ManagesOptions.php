@@ -58,7 +58,7 @@ trait ManagesOptions
      *
      * @param  array  $options
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return bool|\Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function options(array $options = [])
     {
@@ -66,7 +66,7 @@ trait ManagesOptions
             return $this->hasMany(Option::class, 'entity_id')->orderBy('id', 'desc');
         }
 
-        $this->syncOptions($options);
+        return $this->syncOptions($options);
     }
 
     /**
@@ -74,9 +74,9 @@ trait ManagesOptions
      *
      * @param  array  $options
      *
-     * @return void
+     * @return bool
      */
-    public function syncOptions(array $options)
+    public function syncOptions(array $options):bool
     {
         $existing_options = $this->options->mapWithKeys(function ($option) {
             return [
@@ -97,7 +97,9 @@ trait ManagesOptions
             throw new Exception("[{$class}] is missing required options: [{$missing}]");
         }
 
-        DB::transaction(function () use ($options) {
+        $created = false;
+
+        DB::transaction(function () use ($options, &$created) {
 
             $this->options()->delete();
 
@@ -111,9 +113,13 @@ trait ManagesOptions
             });
 
             $this->options()->saveMany($options->values()->all());
+
+            $created = true;
         });
 
         $this->load('options');
+
+        return $created;
     }
 
     /**
