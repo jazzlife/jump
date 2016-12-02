@@ -15,9 +15,8 @@ class CreateEntitiesTable extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
 
-            $table->increments('id');
+            $table->bigInteger('id')->unsigned()->primary();
 
-            $table->string('key')->index()->unique();
             $table->string('type')->index();
             $table->string('label')->index()->nullable();
 

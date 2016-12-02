@@ -2,18 +2,118 @@
 
 namespace App\Support\Features;
 
+use Exception;
 use App\Option;
+use Illuminate\Support\Facades\DB;
+
+/**
+ * @see \App\Entity
+ */
 
 trait ManagesOptions
 {
     /**
+     * Minimal number of required options to create a new entity.
+     *
+     * @var array
+     */
+    protected $requires = [];
+
+    /**
+     * Returns minimal number of required options to create a new entity.
+     *
+     * @return array
+     */
+    public function requires():array
+    {
+        return $this->requires;
+    }
+
+    /**
+     * Determines if were given enough options.
+     *
+     * @param  array $options
+     *
+     * @return bool
+     */
+    public function hasEnoughOptions(array $options):bool
+    {
+        return empty($this->getMissingOptions($options));
+    }
+
+    /**
+     * Returns missing options required by the entity.
+     *
+     * @param  array  $options
+     *
+     * @return array
+     */
+    public function getMissingOptions(array $options):array
+    {
+        return array_diff($this->requires(), array_keys($options));
+    }
+
+    /**
      * An entity may have many options.
+     *
+     * @param  array  $options
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function options()
+    public function options(array $options = [])
     {
-        return $this->hasMany(Option::class, 'entity_id')->orderBy('id', 'desc');
+        if (empty($options)) {
+            return $this->hasMany(Option::class, 'entity_id')->orderBy('id', 'desc');
+        }
+
+        $this->syncOptions($options);
+    }
+
+    /**
+     * Syncs existing options with new options.
+     *
+     * @param  array  $options
+     *
+     * @return void
+     */
+    public function syncOptions(array $options)
+    {
+        $existing_options = $this->options->mapWithKeys(function ($option) {
+            return [
+                $option->name => [
+                    'type'  => $option->type,
+                    'value' => $option->value
+                ]
+            ];
+        })->all();
+
+        $options = array_replace($existing_options, $options);
+
+        if (!$this->hasEnoughOptions($options)) {
+
+            $class   = get_class($this);
+            $missing = implode(', ', $this->getMissingOptions($options));
+
+            throw new Exception("[{$class}] is missing required options: [{$missing}]");
+        }
+
+        DB::transaction(function () use ($options) {
+
+            $this->options()->delete();
+
+            $options = collect($options)->map(function ($option, $name) {
+
+                $fields              = is_array($option) ? $option : [ 'value' => $option ];
+                $fields['name']      = $name;
+                $fields['entity_id'] = $this->id;
+
+                return new Option($this->formatNewOption($fields));
+            });
+
+            $this->options()->saveMany($options->values()->all());
+        });
+
+        $this->load('options');
     }
 
     /**
