@@ -171,7 +171,7 @@ class Meta
     }
 
     /**
-     * Creates HTML code to represent all meta field.
+     * Creates HTML code to represent all meta fields.
      *
      * @return string
      */
