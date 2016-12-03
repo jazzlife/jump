@@ -20,10 +20,10 @@ class Asset
     public function url(string $path, bool $cdn = true):string
     {
         $real_path = base_path('public' . $path);
-        $id        = 0;
+        $id        = '';
 
         if (is_file($real_path)) {
-            $id = crc32(filemtime($real_path));
+            $id = sha1_file($real_path);
         }
 
         if (config('assets.use_cdn') and $cdn) {
@@ -42,11 +42,11 @@ class Asset
      * Returns full URL to a local asset.
      *
      * @param  string $path
-     * @param  int    $id
+     * @param  string $id
      *
      * @return string
      */
-    public function local(string $path, int $id):string
+    public function local(string $path, string $id):string
     {
         return url("{$path}?v={$id}");
     }
@@ -56,11 +56,11 @@ class Asset
      *
      * @param  string $url
      * @param  string $path
-     * @param  int    $id
+     * @param  string $id
      *
      * @return string
      */
-    public function cdn(string $url, string $path, int $id):string
+    public function cdn(string $url, string $path, string $id):string
     {
         $info = pathinfo($path);
 
