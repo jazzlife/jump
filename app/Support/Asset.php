@@ -232,7 +232,7 @@ class Asset
             collect($files)->each(function ($file) use ($path) {
 
                 storage()->disk('s3')->getDriver()->put(
-                    $path . crc32(filemtime($file)) . '-' . basename($file),
+                    $path . sha1_file($file) . '-' . basename($file),
                     file_get_contents($file), [
                         'visibility'   => 'public',
                         'Expires'      => gmdate('D, d M Y H:i:s \G\M\T', time() + static::CACHE_TIME),

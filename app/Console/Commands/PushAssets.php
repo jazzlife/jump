@@ -27,7 +27,17 @@ class PushAssets extends Command
      */
     public function handle()
     {
-        asset()->push($this->argument('type'));
+        $type = $this->argument('type');
+
+        if ($type !== 'all') {
+
+            asset()->push($type);
+        } else {
+
+            asset()->push('images');
+            asset()->push('styles');
+            asset()->push('scripts');
+        }
 
         $this->info("All assets (if any) of type [{$this->argument('type')}] were uploaded to S3.");
     }
