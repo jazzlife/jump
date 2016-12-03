@@ -40,5 +40,6 @@ class PushAssets extends Command
         }
 
         $this->info("All assets (if any) of type [{$this->argument('type')}] were uploaded to S3.");
+        $this->comment("Note: It usually takes up to 10 minutes for new assets to become available through CDN.");
     }
 }
