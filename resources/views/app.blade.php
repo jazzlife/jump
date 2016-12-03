@@ -6,6 +6,8 @@
     {!! meta()->toHtml() !!}
 
     <link rel="stylesheet" href="{{ asset()->url('/css/bundle.css') }}">
+
+    {!! asset()->images() !!}
 </head>
 <body>
     <div id="app"></div>

@@ -132,11 +132,13 @@ class Asset
         });
 
         if (empty($regular)) {
-            return;
+            return '';
         }
 
-        $compiled  = $this->compileRegularImages($regular);
+        $compiled  = '<style>';
+        $compiled .= $this->compileRegularImages($regular);
         $compiled .= $this->compileRetinaImages($retina);
+        $compiled .= '</style>';
 
         Cache::forever($key, $compiled);
 
