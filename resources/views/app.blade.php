@@ -5,6 +5,10 @@
 
     {!! meta()->toHtml() !!}
 
+    @foreach (array_diff(locales(), [ locale() ]) as $locale)
+        <link rel="alternate" href="{{ url_add_locale(app('request')->fullUrl(), $locale) }}" hreflang="{{ $locale }}">
+    @endforeach
+
     <link rel="stylesheet" href="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset()->url('/css/bundle.css') }}">
 
