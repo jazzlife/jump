@@ -45,6 +45,40 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if (app()->environment('production')) {
+
+            $message = 'Bad request.';
+            $code    = 400;
+
+            if ($e instanceof HttpException) {
+                $code = $e->getStatusCode();
+            }
+
+            if ($e instanceof AuthorizationException) {
+                $code = 401;
+            }
+
+            if ($e instanceof ValidationException) {
+                $code = 422;
+            }
+
+            if ($e instanceof ModelNotFoundException) {
+                $code = 404;
+            }
+
+            switch ($code) {
+                case 401: $message = 'Unauthorized.'; break;
+                case 403: $message = 'Access denied.'; break;
+                case 404: $message = 'Page not found.'; break;
+                case 405: $message = 'Not allowed.'; break;
+                case 500: $message = 'Server not available.'; break;
+            }
+
+            $payload = encrypt(json_encode(['code' => $code, 'message' => $message ]));
+
+            return redirect('/error?p=' . $payload);
+        }
+
         return parent::render($request, $e);
     }
 }

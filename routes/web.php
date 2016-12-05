@@ -13,12 +13,10 @@
 
 $pages = [
     '/' => 'index',
+    '/error' => 'error',
+    '/bad-browser' => 'browser',
 ];
 
 collect($pages)->each(function ($page, $path) use ($app) {
     $app->get($path, "PageController@{$page}");
-});
-
-$app->get('/bad-browser', function () {
-    return 'To visit this website please update your browser to the latest version.';
 });
