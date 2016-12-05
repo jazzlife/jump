@@ -32,20 +32,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Registers an handler to cleanup related tables when a model is being deleted.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($model) {
-            return static::cleanup($model);
-        });
-    }
-
-    /**
      * Specifies default attribute values.
      *
      * @return array
@@ -67,17 +53,5 @@ abstract class Model extends BaseModel
         }
 
         return random_int(10000000000000, 90000000000000);
-    }
-
-    /**
-     * Cleanup related tables when a model is being deleted.
-     *
-     * @param  \App\Model  $model
-     *
-     * @return void
-     */
-    protected static function cleanup($model)
-    {
-
     }
 }
