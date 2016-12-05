@@ -74,9 +74,7 @@ class Handler extends ExceptionHandler
                 case 500: $message = 'Server not available.'; break;
             }
 
-            $payload = encrypt(json_encode(['code' => $code, 'message' => $message ]));
-
-            return redirect('/error?p=' . $payload);
+            return redirect('/error?p=' . encrypt(json_encode([ 'code' => $code, 'message' => $message ])));
         }
 
         return parent::render($request, $e);
