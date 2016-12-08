@@ -42,6 +42,8 @@ class PageController extends Controller
      */
     public function browser()
     {
-        return response('To visit this website please update your browser to the latest version.', 403);
+        $url = url_to('/');
+
+        return response("To view this website please update your browser to the latest version. <br><a href='{$url}'>Try again</a>", 403);
     }
 }
