@@ -139,12 +139,13 @@ class Meta
      * Returns the content value of a meta field.
      *
      * @param  string $name
+     * @param  bool   $computed
      *
      * @return mixed
      */
-    public function get(string $name)
+    public function get(string $name, bool $computed = true)
     {
-        return $this->fields[$name]['content'] ?? '';
+        return $this->fields($computed)[$name]['content'] ?? '';
     }
 
     /**

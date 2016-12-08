@@ -136,10 +136,16 @@ function url_to(...$arguments):string
 /**
  * Returns data instance.
  *
+ * @param  string|null    $child
+ *
  * @return \App\Data\Data
  */
-function data()
+function data(string $child = null)
 {
+    if ($child) {
+        return app('data')->make($child);
+    }
+
     return app('data');
 }
 
@@ -176,10 +182,16 @@ function asset()
 /**
  * Returns Meta instance.
  *
+ * @param  string|null       $child
+ *
  * @return \App\Support\Meta
  */
-function meta()
+function meta(string $child = null)
 {
+    if ($child) {
+        return app('meta')->make($child);
+    }
+
     return app('meta');
 }
 

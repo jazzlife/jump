@@ -53,14 +53,15 @@ class Data
      * @param  string      $type
      * @param  string      $path
      * @param  string|null $default
+     * @param  bool        $computed
      *
      * @return mixed
      */
-    public function get($type, string $path, string $default = null)
+    public function get($type, string $path, string $default = null, bool $computed = true)
     {
-        $this->build($type);
+        $array = $this->toArray($type, $computed);
 
-        return array_get($this->cache[$type], $path, $default);
+        return array_get($array, $path, $default);
     }
 
     /**
