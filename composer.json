@@ -16,7 +16,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "jaybizzle/crawler-detect": "^1.2",
         "predis/predis": "^1.1",
-        "illuminate/redis": "^5.3"
+        "illuminate/redis": "^5.3",
+        "vluzrmos/tinker": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -28,6 +28,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
+        Vluzrmos\Tinker\TinkerServiceProvider::class,
     ],
 
     /**
