@@ -27,6 +27,7 @@ return [
     'providers' => [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
     ],
 
     /**
@@ -39,6 +40,7 @@ return [
 
     'route_middleware' => [
         'token' => App\Http\Middleware\ValidateRequestToken::class,
+        'throttle' => App\Http\Middleware\ThrottleRequests::class,
     ],
 
 ];
