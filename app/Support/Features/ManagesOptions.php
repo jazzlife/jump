@@ -63,7 +63,7 @@ trait ManagesOptions
     public function options(array $options = [])
     {
         if (empty($options)) {
-            return $this->hasMany(Option::class, 'entity_id')->orderBy('id', 'desc');
+            return $this->hasMany(Option::class, 'entity_id');
         }
 
         return $this->syncOptions($options);
@@ -156,7 +156,9 @@ trait ManagesOptions
     protected function createNewOption(array $fields)
     {
         $fields = $this->formatNewOption($fields);
-        $option = $this->options()->where('name', $fields['name'])->first();
+        $option = $this->options->first(function ($option) use ($fields) {
+            return $option->name === $fields['name'];
+        });
 
         if ($option) {
 
@@ -344,7 +346,7 @@ trait ManagesOptions
 
         $ids = $query->get()->map(function ($option) { return $option->entity_id; })->all();
 
-        return (new $class)->with('options')->whereIn('id', $ids)->orderBy('id', 'desc');
+        return (new $class)->with('options')->whereIn('id', $ids);
     }
 
     /**
