@@ -47,11 +47,12 @@ class Handler extends ExceptionHandler
     {
         if (app()->environment('production')) {
 
-            $message = 'Bad request.';
+            $message = '';
             $code    = 400;
 
             if ($e instanceof HttpException) {
-                $code = $e->getStatusCode();
+                $code    = $e->getStatusCode();
+                $message = $e->getMessage();
             }
 
             if ($e instanceof AuthorizationException) {
@@ -66,12 +67,16 @@ class Handler extends ExceptionHandler
                 $code = 404;
             }
 
-            switch ($code) {
-                case 401: $message = 'Unauthorized.'; break;
-                case 403: $message = 'Access denied.'; break;
-                case 404: $message = 'Page not found.'; break;
-                case 405: $message = 'Not allowed.'; break;
-                case 500: $message = 'Server not available.'; break;
+            if (empty($message)) {
+
+                switch ($code) {
+                    case 401: $message = 'Unauthorized.'; break;
+                    case 403: $message = 'Access denied.'; break;
+                    case 404: $message = 'Page not found.'; break;
+                    case 405: $message = 'Not allowed.'; break;
+                    case 500: $message = 'Server not available.'; break;
+                    default: $message = 'Bad Request.';
+                }
             }
 
             return redirect('/error?p=' . encrypt(json_encode([ 'code' => $code, 'message' => $message ])));

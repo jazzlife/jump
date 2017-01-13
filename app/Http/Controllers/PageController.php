@@ -32,7 +32,7 @@ class PageController extends Controller
     {
         $payload = json_decode(decrypt(app('request')->input('p')), true);
 
-        return response($payload['message'] ?? '', $payload['code'] ?? 400);
+        return response($payload['message'] ?? 'Bad Request.', $payload['code'] ?? 400);
     }
 
     /**
@@ -44,6 +44,7 @@ class PageController extends Controller
     {
         $url = url_to('/');
 
-        return response("To view this website please update your browser to the latest version. <br><a href='{$url}'>Try again</a>", 403);
+        return response("To view this website please update your browser to the latest version.
+                         <br><a href='{$url}'>Try again</a>", 403);
     }
 }
