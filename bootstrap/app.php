@@ -24,6 +24,10 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+
+// Register MongoDB provider here because it has to be loaded before Eloquent.
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+
 $app->withEloquent();
 
 /*

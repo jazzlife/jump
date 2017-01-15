@@ -1,7 +1,7 @@
 
 This is a boilerplate for Single Page Applications using VueJS, Vuex, Vue-Router and Vue-Resource based on the Lumen micro-framework.
 
-### 1. Installation
+### Installation
 
 ```bash
 # First, download source files.
@@ -21,7 +21,24 @@ npm install
 gulp
 ```
 
-### 3. Official Documentation
+### Differences From Lumen
+
+This package has some differences from the original *Lumen* framework and 
+some new features which make develompent of SPAs a lot faster.
+
+#### MongoDB
+
+Default Database for this package is *MongoDB*.
+
+- [What is MongoDB?](https://www.mongodb.com/)
+- [Install MongoDB on Dev Machine](https://docs.mongodb.com/manual/installation/)
+- [Install MongoDB PHP Driver on Dev Machine](http://php.net/manual/en/mongodb.setup.php)
+- [All-in-one installer for Homestead](https://github.com/zakhttp/Mongostead7)
+- [Use MongoDB with Eloquent](https://github.com/jenssegers/laravel-mongodb)
+
+> **Note:** *laravel-mongo* package is already installed and configured.
+
+### Official Documentation
 
 - [Lumen Documentation](https://lumen.laravel.com/docs/)
 - [VueJS Documentation](http://vuejs.org/guide/)
