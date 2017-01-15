@@ -44,4 +44,3 @@ Default Database for this package is *MongoDB*.
 - [VueJS Documentation](http://vuejs.org/guide/)
 - [Vuex Documentation](https://vuex.vuejs.org/)
 - [Vue-Router Documentation](https://router.vuejs.org/)
-- [Vue-Resource Documentation](https://github.com/vuejs/vue-resource)
