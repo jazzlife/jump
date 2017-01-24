@@ -29,6 +29,7 @@ return [
         App\Providers\EventServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
         Vluzrmos\Tinker\TinkerServiceProvider::class,
+        Sentry\SentryLaravel\SentryLumenServiceProvider::class,
     ],
 
     /**

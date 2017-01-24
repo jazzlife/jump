@@ -19,12 +19,4 @@ return [
         'app_id' => env('OPENEXCHANGERATES_APP_ID'),
     ],
 
-    /**
-     * Track JavaScript Errors.
-     */
-
-    'sentry' => [
-        'url' => env('SENTRY_URL')
-    ],
-
 ];

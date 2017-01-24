@@ -21,9 +21,9 @@
 <body>
     <div id="app"></div>
 
-    @if (config('services.sentry.url'))
+    @if (env('SENTRY_PUBLIC_DSN'))
         <script src="https://cdn.ravenjs.com/3.8.0/raven.min.js"></script>
-        <script>Raven.config('{{ config("services.sentry.url") }}').install();</script>
+        <script>Raven.config('{{ env('SENTRY_PUBLIC_DSN') }}').install();</script>
     @endif
 
     <script>window.APP_STORE = {!! data()->toJson('store') !!};</script>
