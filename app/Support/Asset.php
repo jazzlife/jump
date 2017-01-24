@@ -80,6 +80,28 @@ class Asset
     }
 
     /**
+     * Returns a list of image extensions.
+     *
+     * @return string
+     */
+    public function imagesPattern():string
+    {
+        return '*.{jpg,jpeg,png,gif}';
+    }
+
+    /**
+     * Returns the cache key of images in a given directory.
+     *
+     * @param  string $dir
+     *
+     * @return string
+     */
+    public function imagesCacheKey(string $dir):string
+    {
+        return 'assets.' . md5(trim($dir, '/') . '/' . $this->imagesPattern());
+    }
+
+    /**
      * Creates CSS code to represent all image assets.
      *
      * @param  string $dir
@@ -90,19 +112,18 @@ class Asset
      */
     public function images(string $dir = 'images/', bool $fresh = false, string $prefix = ''):string
     {
-        $pattern = '*.{jpg,jpeg,png,gif}';
-        $key     = 'assets.' . md5($dir . $pattern);
+        $key = $this->imagesCacheKey($dir);
 
         if (!$fresh) {
 
             $cache = Cache::get($key);
 
             if ($cache) {
-                return $cache;
+                return (string)$cache;
             }
         }
 
-        $files   = $this->list($dir . $pattern);
+        $files   = $this->list($dir . $this->imagesPattern());
         $regular = [];
         $retina  = [];
 
@@ -199,6 +220,18 @@ class Asset
     }
 
     /**
+     * Clears images cache.
+     *
+     * @param  string $dir
+     *
+     * @return void
+     */
+    public function clearImagesCache(string $dir)
+    {
+        Cache::forget($this->imagesCacheKey($dir));
+    }
+
+    /**
      * Sends all assets of a given type to the S3 storage.
      *
      * @param  string $type
@@ -214,16 +247,23 @@ class Asset
         }
 
         $paths   = explode(',', $path);
-        $pattern = '*.{jpg,jpeg,png,gif}';
+        $pattern = $this->imagesPattern();
         $pattern = $type === 'styles' ? '*.css' : $pattern;
         $pattern = $type === 'scripts' ? '*.js' : $pattern;
 
-        collect($paths)->each(function ($path) use ($pattern) {
+        collect($paths)->each(function ($path) use ($pattern, $type) {
 
             $path = trim($path);
 
             if (empty($path)) {
                 return;
+            }
+
+            $path = trim($path, '/') . '/';
+
+            if ($type === 'images') {
+
+                $this->clearImagesCache($path);
             }
 
             storage()->disk('s3')->makeDirectory($path);
