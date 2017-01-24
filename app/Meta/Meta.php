@@ -149,6 +149,18 @@ class Meta
     }
 
     /**
+     * Removes a meta field.
+     *
+     * @param  string $name
+     *
+     * @return void
+     */
+    public function remove(string $name)
+    {
+        unset($this->fields[$name]);
+    }
+
+    /**
      * Returns all meta fields as an array.
      *
      * @param  bool   $computed
