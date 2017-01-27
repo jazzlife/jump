@@ -6,6 +6,12 @@
 import store from './store'
 
 /**
+ * Manage routes in the Application with the official Vue Router.
+ */
+
+import router from './router'
+
+/**
  * Use a default layout for the Application.
  */
 
@@ -17,5 +23,6 @@ import layout from './layouts/app.vue'
 
 new Vue({
     store,
+    router,
     render: h => h(layout)
 }).$mount('#app');
