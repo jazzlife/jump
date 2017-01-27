@@ -1,0 +1,23 @@
+
+#app
+    width 100%
+    min-height 100vh
+
+    &:before
+        content ""
+        position absolute
+        top 50%
+        left 50%
+        margin -12px 0 0 -12px
+        width 24px
+        height 24px
+        border-radius 50%
+        border 3px solid rgba(#bdc3c7, .2)
+        border-top-color #bdc3c7
+        animation rotate .6s infinite linear
+
+@keyframes rotate
+    from
+        transform rotate(0deg)
+    to
+        transform rotate(360deg)
