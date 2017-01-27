@@ -42,7 +42,10 @@ elixir(mix => {
      * Remove existing CSS/JavaScript files before a new build.
      */
 
-    mix.cleanup([ './public/js', './public/css' ]);
+    if (elixir.config.production) {
+
+        mix.cleanup([ './public/js', './public/css' ]);
+    }
 
     /**
      * Compile Stylus files.
@@ -85,15 +88,21 @@ elixir(mix => {
      * Remove unused CSS files.
      */
 
-    mix.del([
-        './public/css/app.css',
-    ]);
+    if (elixir.config.production) {
+
+        mix.del([
+            './public/css/app.css',
+        ]);
+    }
 
     /**
      * Remove unused JavaScript files.
      */
 
-    mix.del([
-        './public/js/app.js',
-    ]);
+    if (elixir.config.production) {
+
+        mix.del([
+            './public/js/app.js',
+        ]);
+    }
 });

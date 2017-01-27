@@ -32,10 +32,10 @@
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/string-format/0.5.0/string-format.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js') }}"></script>
-    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.runtime.js') }}"></script>
-    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.js') }}"></script>
-    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.1.1/vue-router.js') }}"></script>
-    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vuex/2.0.0/vuex.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.runtime.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.0/vue-router.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js') }}"></script>
     <script src="{{ asset()->url('/js/bundle.js') }}"></script>
 
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js') }}"></script>
