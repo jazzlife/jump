@@ -1,4 +1,6 @@
 
+require('./bootstrap.js');
+
 /**
  * The single source of truth in the Application is the Vuex Store.
  */
