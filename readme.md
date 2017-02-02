@@ -14,9 +14,9 @@
 ---
 
 - [**Lumen** 5.3.2](#lumen) 
-- [**VueJS** 2.1.4](#vuejs)
-- [**Vuex** 2.0.0](#vuex)
-- [**Vue-Router** 2.1.1](#vue-router)
+- [**VueJS** 2.1.10](#vuejs)
+- [**Vuex** 2.1.1](#vuex)
+- [**Vue-Router** 2.2.0](#vue-router)
 - [Built-in MongoDB Support](#mongodb)
 - Tools & Libraries
     - PHP
@@ -46,8 +46,10 @@
     - [Request Throttling](#request-throttling)
     - [Data Manager](#data-manager)
     - [Meta Manager](#meta-manager)
-    - [Asset Manager](#asset-manager)
     - [Currency Manager](#currency-manager)
+    - [Beanstalkd Queues](#beanstalkd-queues)
+
+> Jump may also include some additional supporting libraries and packages which are not included in the list.
 
 <br>
 
@@ -55,12 +57,12 @@
 
 ---
 
-> **Note:** Jump requires PHP 7.0 or later.
+> Jump requires PHP 7.0 or later.
 
 ```bash
 # First, download source files.
-git clone https://github.com/sumanion/spa
-cd spa
+git clone https://github.com/sumanion/jump
+cd jump
 
 # Then, install composer dependencies.
 # Note: You should have composer installed.
@@ -85,7 +87,7 @@ gulp
 
 #### Lumen
 
-Jump uses Lumen micro-framework on backend, at least for now, because it is blazing fast and easy to use.
+Jump uses Lumen micro-framework on backend, because it is blazing fast and easy to use.
 
 - [Lumen Docs](https://lumen.laravel.com/docs/5.3)
 
@@ -97,6 +99,10 @@ To build powerful client interfaces Jump uses *the most progressive* JavaScript 
 
 - [VueJS Docs](http://vuejs.org/v2/guide/)
 
+###### Usage:
+
+By default, Jump loads `/resources/assets/js/layouts/app.vue` component as the main template of the aplication in `/resources/assets/js/app.js`. You can edit the layout to match your needs or create a new layout.
+
 <br>
 
 #### Vuex
@@ -104,6 +110,14 @@ To build powerful client interfaces Jump uses *the most progressive* JavaScript 
 Vuex is a state management pattern + library for VueJS applications. It serves as a centralized store for all the components in an application, with rules ensuring that the state can only be mutated in a predictable fashion.
 
 - [Vuex Docs](https://vuex.vuejs.org/)
+
+###### Usage:
+
+Vuex is initialized in `/resources/assets/js/store/index.js` file and contains some parts: `actions`, `getters`, `mutations` and `state` which are self-descriptive if you read docs. 
+
+> New modules can be created in the `/resources/assets/js/store/modules/` directory.
+
+> It is recommended to store all mutation types in the `/resources/assets/js/store/mutation-types.js` file.
 
 <br>
 
@@ -113,11 +127,15 @@ A powerful router for VueJS SPAs.
 
 - [Vue-Router Docs](https://router.vuejs.org/)
 
+###### Usage:
+
+Vue-Router is initialized in `/resources/assets/js/router/index.js` file and loads all routes from `/resources/assets/js/router/routes.js`.
+
 <br>
 
 #### MongoDB
 
-*MongoDB is an open source database that uses a document-oriented data model. MongoDB is one of several database types to arise in the mid-2000s under the NoSQL banner. Instead of using tables and rows as in relational databases, MongoDB is built on an architecture of collections and documents.*
+*MongoDB is an open source database that uses a document-oriented data model. Instead of using tables and rows as in relational databases, MongoDB is built on an architecture of collections and documents.*
 
 Jump uses MongoDB by default, as the main database, because of it's power, flexibility, scalability and performance.
 
@@ -128,7 +146,7 @@ Jump uses MongoDB by default, as the main database, because of it's power, flexi
 - [Use MongoDB with Eloquent](https://github.com/jenssegers/laravel-mongodb)
 - [Cross-Platform MongoDB Manager](https://robomongo.org/)
 
-> **Note:** *laravel-mongo* package is already installed and configured.
+> *laravel-mongo* package is already installed and configured.
 
 ###### Usage:
 
@@ -168,14 +186,14 @@ php artisan tinker
 
 Jump uses Redis as the default cache driver, because of it's amazing speed.
 
-> **Important:** You should have Redis installed on your machine. (Homestead have it installed by default)
+> You should have Redis installed on your machine. (Homestead have it installed by default)
 
 - [Redis Official Website](https://redis.io/)
 
 *You can use Redis facade to execute Redis commands.*
 [*More details*](https://laravel.com/docs/5.3/redis)
 
-> **Note:** *predis/predis* package is already installed.
+> *predis/predis* package is already installed.
 
 <br>
 
@@ -201,6 +219,16 @@ Pug is a template language which is used in Vue components to create templates f
 
 - [Pug Docs](https://pugjs.org/api/getting-started.html)
 
+###### Usage:
+
+*/resources/assets/js/components/example-component.vue*
+
+```html
+<template lang="pug">
+    <!-- / pug code / -->
+</template>
+```
+
 <br>
 
 #### Stylus
@@ -208,6 +236,16 @@ Pug is a template language which is used in Vue components to create templates f
 Stylus is a revolutionary new language, providing an efficient, dynamic, and expressive way to generate CSS. Jump uses Stylus in Vue compoenents and to create main style of the application.
 
 - [Stylus Docs](http://stylus-lang.com/)
+
+###### Usage:
+
+*/resources/assets/js/components/example-component.vue*
+
+```html
+<style lang="stylus">
+    /* stylus code */
+</style>
+```
 
 <br>
 
@@ -245,11 +283,21 @@ Modernizr is a JavaScript library that detects which HTML5 and CSS3 features you
 
 - [Modernizr Docs](https://modernizr.com/docs)
 
+###### Usage:
+
+```javascript
+if (Modernizr.flexbox) {
+    // Browser supports flexbox.
+} else {
+    // Browser doesn't support flexbox.
+}
+```
+
 <br>
 
 #### Babel ES6 Polyfills
 
-This will emulate a full ES2015 environment and is intended to be used in an application rather than a library/tool. 
+Babel ES6 Polyfills will emulate a full ES2015 environment for browsers which doesn't support ES2015 yet.
 
 - [More Details on Babel ES6 Polyfills](https://babeljs.io/docs/usage/polyfill/)
 
@@ -294,9 +342,9 @@ Sentry's real-time error tracking gives you insight into production deployments 
 ###### Usage:
 
 1. Register on the [Sentry website](https://sentry.io/).
-2. Create a New Project.
+2. Create a **New Project**.
 3. On the **"Configure your application"** page click **"Get your DSN"**.
-4. Copy **URL** from **DSN** to `SENTRY_PRIVATE_DSN` variable in the `.env` file.
+4. Copy **URL** from **DSN** to `SENTRY_DSN` variable in the `.env` file.
 5. Copy **URL** from **Public DSN** to `SENTRY_PUBLIC_DNS` variable in the `.env` file.
 6. Now, all `PHP` and `JavaScript` errors will be reported to your Sentry dashboard.
 
@@ -304,9 +352,9 @@ Sentry's real-time error tracking gives you insight into production deployments 
 
 #### Multiple Languages
 
-Lumen, by default, supports multiple languages and in Jump we enhanced this feature a bit, so now you can change the language from the URL.
+Lumen, by default, supports multiple languages and in Jump we enhanced this feature a bit, and now you can change the language from the URL.
 
-> **Note:** If no language is passed in the query string (`hl` parameter), the preferred language will be matched automatically.
+> If no language is passed in the query string (`hl` parameter), the preferred language will be matched automatically.
 
 ###### Usage:
 
@@ -341,13 +389,15 @@ Mail support was removed from Lumen, but in Jump we bring in back. Usage is the 
 
 - [Laravel Mail Docs](https://laravel.com/docs/5.3/mail)
 
+> In Jump, default mail driver is set to *mailgun*
+
 <br>
 
 #### RequestToken Manager
 
 In Jump, every AJAX request must be signed with a Token. 
 
-RequestToken Managed is already integrated and configured in Jump and every request made with *Axios* is signed with the right Token.
+RequestToken Manager is already integrated and configured in Jump and every request made with *Axios* is signed with the right Token.
 
 ###### API:
 
@@ -373,7 +423,7 @@ app('request-token')->validate('TOKEN');
 - Routes which should be signed with a Token must be placed in `/routes/api.php` file.
 - Routes which can be both signed and not signed with a Token must be placed in `/routes/web.php` file.
 
-> **Note:** See tests for details.
+> See tests for more details.
 
 <br>
 
@@ -381,16 +431,16 @@ app('request-token')->validate('TOKEN');
 
 Jump allows only `60` Ajax request per minute from an IP address and `120` regular HTTP requests per minute from an IP address.
 
-> **Note:** These limits can me modified in `/bootstrap/app.php`
+> These limits can me modified in `/bootstrap/app.php`
 
 
 <br>
 
 #### Data Manager
 
-Data Manager is a Class which contains a store of key-value pairs with data used by the Vue Components and the translation of the Application.
+Data Manager is a class which contains a store of key-value pairs with data used by the Vue Components and the translation of the Application.
 
-Data Manager sends it's values to Vuex Store.
+> Data Manager sends it's values to Vuex Store.
 
 ###### Usage:
 
@@ -438,21 +488,22 @@ this.$store.state.trans.greeting; // Hello!
 ```php
 // Load a Data Manager.
 data()->make(); // Default: 'AppData'
+data()->make('MyData');
 
 // Return all store values from all loaded Data Managers.
 data()->toArray('store');
 
 // Add a new store value to the Data Manager.
-data()->set('store', 'key', 'value');
+data()->set('store', 'foo', 'bar');
 
 // Remove a store value from the Data Manager.
-data()->remove('store', 'key');
+data()->remove('store', 'foo');
 
 // Add a new translated value to the Data Manager.
-data()->set('translation', 'key', 'value');
+data()->set('translation', 'foo', 'bar');
 
 // Remove a translated value from the Data Manager.
-data()->remove('translation', 'key');
+data()->remove('translation', 'foo');
 
 // Return all translated values from all loaded Data Managers.
 data()->toArray('translation');
@@ -462,7 +513,7 @@ data()->toArray('translation');
 
 #### Meta Manager
 
-Meta Manager is a Class wich helps to add meta tags to the Application.
+Meta Manager is a class wich helps to add meta tags to the Application a lot faster.
 
 ###### Usage:
 
@@ -491,49 +542,15 @@ public function init()
 ```php
 // Load a Meta Manager.
 meta()->make(); // Default: 'AppMeta'
+meta()->make('MyMeta');
 
 // Add: <meta name="foo" content="bar">
 meta()->foo = 'bar';
+meta()->set('foo', 'bar', 'meta');
 
 // Return all meta fields from all loaded Meta Managers.
 meta()->fields();
 
 // Convert meta fields to HTML tags.
 meta()->toHtml();
-```
-
-<br>
-
-#### Asset Manager
-
-###### Environment Variables:
-
-```bash
-
-# Amazon S3 Credentials.
-S3_KEY=
-S3_SECRET=
-S3_REGION=
-S3_BUCKET=
-
-ASSETS_USE_CDN=true|false
-ASSETS_CDN_URL=<Amazon CloudFront Url>
-
-# Paths to assets which must be uploaded to Amazon S3.
-ASSETS_IMAGES_PATH=<images/>
-ASSETS_STYLES_PATH=<css/>
-ASSETS_SCRIPTS_PATH=<js/>
-```
-
-###### Commands:
-
-```bash
-# Upload images to Amazon S3.
-php artisan asset:push images
-
-# Upload scripts to Amazon S3.
-php artisan asset:push scripts
-
-# Upload styles to Amazon S3.
-php artisan asset:push styles
 ```
