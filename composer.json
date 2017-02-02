@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "sumanion/jump",
+    "description": "Fast SPAs using Lumen, VueJS, Vue-Router and Vuex.",
+    "keywords": ["framework", "laravel", "lumen", "jump", "spa", "vuejs", "vuex", "vue-router", "axios"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -12,8 +12,6 @@
         "illuminate/mail": "^5.3",
         "guzzlehttp/guzzle": "^6.2",
         "menarasolutions/geographer": "^0.3.1",
-        "league/flysystem": "^1.0",
-        "league/flysystem-aws-s3-v3": "^1.0",
         "jaybizzle/crawler-detect": "^1.2",
         "predis/predis": "^1.1",
         "illuminate/redis": "^5.3",

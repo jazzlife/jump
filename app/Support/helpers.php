@@ -160,16 +160,6 @@ function currency()
 }
 
 /**
- * Returns Filesystem instance.
- *
- * @return \Illuminate\Filesystem\FilesystemManager
- */
-function storage()
-{
-    return app('filesystem');
-}
-
-/**
  * Returns Asset instance.
  *
  * @return \App\Support\Asset

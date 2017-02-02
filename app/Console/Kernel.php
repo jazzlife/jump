@@ -14,8 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\GenerateApplicationKey::class,
-        Commands\PushAssets::class,
-        Commands\ClearImagesCache::class,
     ];
 
     /**

@@ -39,10 +39,6 @@ class AppServiceProvider extends ServiceProvider
             return new Currency;
         });
 
-        $this->app->singleton('filesystem', function ($app) {
-            return $app->loadComponent('filesystems', 'Illuminate\Filesystem\FilesystemServiceProvider', 'filesystem');
-        });
-
         $this->app->singleton('asset', function () {
             return new Asset;
         });
