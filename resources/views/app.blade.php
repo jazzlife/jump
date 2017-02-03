@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset()->url('/css/bundle.css') }}">
 
-    <style>{!! asset()->images()->css() !!}</style>
+    <style>{!! asset()->css() !!}</style>
 
     <noscript>
         <meta http-equiv="refresh" content="0; url=/bad-browser">

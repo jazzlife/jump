@@ -3,9 +3,57 @@
 namespace App\Support;
 
 use App\Support\Assets\ImageIterator;
+use Illuminate\Support\Facades\Cache;
 
 class Asset
 {
+    /**
+     * Creates a cache key.
+     *
+     * @param  string $id
+     *
+     * @return string
+     */
+    public function key(string $id):string
+    {
+        return 'asset.' . sha1($id);
+    }
+
+    /**
+     * Adds an item to the assets cache.
+     *
+     * @param string $id
+     * @param string $content
+     */
+    public function cache(string $id, string $content):string
+    {
+        Cache::tags('assets')->forever($this->key($id), $content);
+
+        return $content;
+    }
+
+    /**
+     * Retreives an item from the assets cache.
+     *
+     * @param  string $id
+     *
+     * @return string
+     */
+    public function get(string $id):string
+    {
+        return (string)Cache::tags('assets')->get($this->key($id));
+    }
+
+    /**
+     * Clears the assets cache.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        Cache::tags('assets')->flush();
+    }
+
     /**
      * Returns full URL to an asset.
      *
@@ -23,15 +71,15 @@ class Asset
     }
 
     /**
-     * Returns an instance of Images Manager.
+     * Returns CSS representation of all images in a directory.
      *
      * @param  string $dir
      * @param  string $prefix
      *
-     * @return \App\Support\Images
+     * @return string
      */
-    public function images(string $dir = 'images', string $prefix = '')
+    public function css(string $dir = 'images', string $prefix = ''):string
     {
-        return new ImageIterator($dir, $prefix);
+        return $this->get($dir) ?: $this->cache($dir, (new ImageIterator($dir, $prefix))->css());
     }
 }
