@@ -62,7 +62,7 @@
 
 ```bash
 # First, download source files.
-git clone https://github.com/sumanion/jump
+composer create-project sumanion/jump
 cd jump
 
 # Then, install composer dependencies.
@@ -264,7 +264,7 @@ Jump loads Rupture in Vue compoenents styled with Stylus and in Stylus files com
 
 Lost Grids is a powerful grid system built in PostCSS that works with any preprocessor and even vanilla CSS.
 
-Jump loads Lost Grids in Vue compoenents styled with Stylus and in Stylus files compiled by the application.
+Jump loads Lost Grids in Vue components styled with Stylus and in Stylus files compiled by the application.
 
 - [Lost Grids Docs](http://lostgrid.org/docs.html)
 
@@ -353,8 +353,8 @@ Sentry's real-time error tracking gives you insight into production deployments 
 1. Register on the [Sentry website](https://sentry.io/).
 2. Create a **New Project**.
 3. On the **"Configure your application"** page click **"Get your DSN"**.
-4. Copy **URL** from **DSN** to `SENTRY_DSN` variable in the `.env` file.
-5. Copy **URL** from **Public DSN** to `SENTRY_PUBLIC_DNS` variable in the `.env` file.
+4. Copy **URL** from **DSN** to `SENTRY_DSN` constant in the `.env` file.
+5. Copy **URL** from **Public DSN** to `SENTRY_PUBLIC_DNS` constant in the `.env` file.
 6. Now, all `PHP` and `JavaScript` errors will be reported to your Sentry dashboard.
 
 <br>
@@ -367,9 +367,9 @@ Lumen, by default, supports multiple languages and in Jump we enhanced this feat
 
 ###### Usage:
 
-1. Add a comma separated list of languages available in your application to the `APP_LOCALES` variable to the `.env` file. (ex: `APP_LOCALES=en,fr,es,ru`)
-2. Set the default language to the `APP_LOCALE` variable in the `.env` file.
-3. Set the fallback language to the `APP_FALLBACK_LOCALE` variable in the `.env` file.
+1. Add a comma separated list of languages available in your application to the `APP_LOCALES` constant to the `.env` file. (ex: `APP_LOCALES=en,fr,es,ru`)
+2. Set the default language to the `APP_LOCALE` constant in the `.env` file.
+3. Set the fallback language to the `APP_FALLBACK_LOCALE` constant in the `.env` file.
 4. Now you can change language from the URL like this: `http://app.dev/?hl=fr`
 
 <br>
@@ -607,7 +607,7 @@ Let's use our example image again: `/public/images/my-image.jpg` with dimensions
 
 Then, it will add the CSS in `<head>` section of the page, in `/resources/views/app.blade.php`.
 
-Finally, to use the image just by using it's class in the desired tag of our component:
+Finally, to use the image just use it's class in the desired tag of our component:
 
 ```html
 <template>
@@ -623,7 +623,7 @@ Finally, to use the image just by using it's class in the desired tag of our com
 
 *__Performance:__*
 
-Reading all images in a directory and determining their dimensions can be slow in some cases, and to prefent high resource usage and the slow execution, the CSS representation of images is forever cached using default cache driver.
+Reading all images in a directory and determining their dimensions can be slow in some cases, and to prevent high resource usage and the slow execution, the CSS representation of images is forever cached using default cache driver.
 
 > If you update images in a directory where Asset Manager is used, make sure you clear the cache or you won't see changes. Command to clear entire asset cache is `php artisan asset:clear`.
 
@@ -634,6 +634,12 @@ Reading all images in a directory and determining their dimensions can be slow i
 > *Jump is an opinionated setup*, and it was primarily intended for small stores, that's why it includes the Currency Manager too, by default.
 
 Currency Manager can convert prices from one currency to another, can format prices in all currencies, and much more.
+
+###### OpenExchangeRates API:
+
+Currency Manager uses [OpenExchangeRates](https://openexchangerates.org/) API to determine current exchange rates for all currencies.
+
+To use all features of the Currency Manager, register on [OpenExchangeRates](https://openexchangerates.org/) website and copy your **APP ID** to `OPENEXCHANGERATES_APP_ID` constant in `.env` file.
 
 ###### API:
 
