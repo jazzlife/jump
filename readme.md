@@ -46,6 +46,7 @@
     - [Request Throttling](#request-throttling)
     - [Data Manager](#data-manager)
     - [Meta Manager](#meta-manager)
+    - [Asset Manager](#asset-manager)
     - [Currency Manager](#currency-manager)
     - [Beanstalkd Queues](#beanstalkd-queues)
 
@@ -137,7 +138,7 @@ Vue-Router is initialized in `/resources/assets/js/router/index.js` file and loa
 
 *MongoDB is an open source database that uses a document-oriented data model. Instead of using tables and rows as in relational databases, MongoDB is built on an architecture of collections and documents.*
 
-Jump uses MongoDB by default, as the main database, because of it's power, flexibility, scalability and performance.
+Jump uses MongoDB by default, as the main database driver (instead of MySQL), because of it's power, flexibility, scalability and performance.
 
 - [MongoDB Official Website](https://www.mongodb.com/)
 - [Install MongoDB on Dev Machine](https://docs.mongodb.com/manual/installation/)
@@ -274,6 +275,14 @@ Jump loads Lost Grids in Vue compoenents styled with Stylus and in Stylus files 
 Lodash is A modern JavaScript utility library delivering modularity, performance & extras.
 
 - [Lodash Docs](https://lodash.com/docs/4.17.4)
+
+###### Usage:
+
+```javascript
+let random = require('lodash/random');
+
+console.log(random(0, 10)); // 7
+```
 
 <br>
 
@@ -554,3 +563,150 @@ meta()->fields();
 // Convert meta fields to HTML tags.
 meta()->toHtml();
 ```
+
+<br>
+
+#### Asset Manager
+
+Asset Manager is a class which creates URLs with versions to the local assets, and creates CSS representation of all image assets.
+
+###### URLs:
+
+Let's say we have a CSS file in `/public/css/bundle.css`, obviously we can add the URL manually `<link rel="stylesheet" href="/css/bundle.css">`, but if the file is cached in client's browser and we modify the CSS, the client won't see any changes until cache expires.
+
+You can add versions manually (like: `/css/bundle.css?v=1`), but, in Jump, to make this process faster and easier, we created a dedicated method which will create unique versions for every asset and it will change the version if you modify the asset:
+
+*__Example:__*
+
+```php
+// Creates unique URLs to every version of an asset.
+// Returns something like: /css/bundle.css?v=6eccfa82a75faacee3a5044c9215dedebd1f481a
+asset()->url('/css/bundle.css');
+```
+
+###### Images:
+
+Let's say we have an image in `/public/images/my-image.jpg` and we want to use it in our components. This is trivial, but when we have retina versions of images, we have to use mixins or to create media queries ourselves, and if an image is used in multiple components we have to move it outside to prevend duplication, and what if we want to use a CDN? Then we will have to update all URLs in all components.
+
+In Jump, we decided to make the entire process a lot faster, and much easier: The Asset Manager will read all images in a public directory (default: `/public/images/`) and will create their CSS representation and add it to the page. It also adds media queries automatically for retina images.
+
+*__Example:__*
+
+Let's use our example image again: `/public/images/my-image.jpg` with dimensions of `200x100 px`. The Asset Manager will read the image and will create it's CSS representation like this: 
+
+```css
+.img--my-image {
+    background-image: url(/public/images/my-image.jpg);
+    background-size: 200px 100px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+```
+
+> The class name `img--my-image` is created from the basename of the image, using `str_slug()` helper. `.img--` is the default prefix.
+
+Then, it will add the CSS in `<head>` section of the page, in `/resources/views/app.blade.php`.
+
+Finally, to use the image just by using it's class in the desired tag of our component:
+
+```html
+<template>
+    <div>
+        <!-- /.../ -->
+        <div class="img--my-image"></div>
+        <!-- /.../ -->
+    </div>
+</template>
+```
+
+> Retina versions of images are added automatically, just make sure their name is the same as for non-retina version and they end in `@2x` (example: `/public/images/my-image@2x.jpg`)
+
+*__Performance:__*
+
+Reading all images in a directory and determining their dimensions can be slow in some cases, and to prefent high resource usage and the slow execution, the CSS representation of images is forever cached using default cache driver.
+
+> If you update images in a directory where Asset Manager is used, make sure you clear the cache or you won't see changes. Command to clear entire asset cache is `php artisan asset:clear`.
+
+<br>
+
+#### Currency Manager
+
+> *Jump is an opinionated setup*, and it was primarily intended for small stores, that's why it includes the Currency Manager too, by default.
+
+Currency Manager can convert prices from one currency to another, can format prices in all currencies, and much more.
+
+###### API:
+
+```php
+// Returns fresh exchange rates for all currencies.
+// IMPORTANT: Requires OpenExchangeRates APP ID to work.
+// Note: Base currency is the USD, it's rate is always equal to 1.
+currency()->fresh(); // [ "USD" => 1, "EUR" => 0.929706 /* ... */ ]
+
+// Returns cached exchange rates for all currencies.
+// Works the same as ::fresh() method.
+// Note: If rates are not cached fetches fresh rates and cache them.
+currency()->rates(); // [ "USD" => 1, "EUR" => 0.929706 /* ... */ ]
+
+// Returns a list of all supported currencies.
+// IMPORTANT: Requires OpenExchangeRates APP ID to work.
+currency()->all(); // [ "USD", "EUR" /* ... */ ]
+
+// Returns information about all supported currencies.
+// More info in: /resources/data/currency-format.json
+currency()->format();
+
+// Determines if a currency is supoprted.
+currency()->exists('USD'); // true
+
+// Returns the symbol of a currency.
+currency()->symbol('USD'); // $
+
+// Returns the representation template of the currency.
+currency()->template('USD'); // $1
+
+// Returns the exchange rate of a currency compared to the base currency.
+// Note: Default base currency is USD.
+currency()->rate('USD'); // 1
+
+// Returns the exchange rate of a currency compared to EUR.
+currency()->rate('USD', 'EUR'); // 1.0756088483886
+
+// Returns a value only with two decimal places.
+currency()->pretty(17.4321348); // 17.43
+
+// Returns a value ending with .99
+currency()->pretty(17.4321348, true); // 17.99
+
+// Returns a value converted to a currency compared to the base currency.
+// Note: Default base currency is USD.
+currency()->value(17.432, 'USD'); // 17.43
+
+// Returns a value converted to a currency compared to EUR.
+currency()->value(17.432, 'USD', 'EUR'); // 18.75
+
+// Returns a value converted to a currency compared to EUR, which ends in .99.
+currency()->value(17.432, 'USD', 'EUR', true); // 18.99
+
+// Formats a value in a currency compared to the base currency.
+// Note: Default base currency is USD.
+currency()->format(17.432, 'USD'); // $17.43
+
+// Formats a value in a currency compared to EUR.
+currency()->format(17.432, 'USD', 'EUR'); // $18.75
+
+// Formats a value in a currency compared to EUR, which ends in .99.
+currency()->format(17.432, 'USD', 'EUR'); // $18.99
+```
+
+> See more details in tests.
+
+<br>
+
+#### Beanstalkd Queues
+
+Default queue driver in Jump is beanstalkd.
+
+- [More details on Queues](https://laravel.com/docs/5.3/queues)
+
+> You should have Beanstalkd installed on your machine. (Homestead have it installed by default)
