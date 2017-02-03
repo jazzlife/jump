@@ -65,10 +65,6 @@
 composer create-project sumanion/jump
 cd jump
 
-# Then, install composer dependencies.
-# Note: You should have composer installed.
-composer install
-
 # Then, install node dependencies.
 # Note: You should have node & npm installed.
 npm install
