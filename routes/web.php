@@ -11,12 +11,6 @@
 |
 */
 
-$pages = [
-    '/' => 'index',
-    '/error' => 'error',
-    '/bad-browser' => 'browser',
-];
-
-collect($pages)->each(function ($page, $path) use ($app) {
-    $app->get($path, "PageController@{$page}");
-});
+$app->get('/', 'PageController@index');
+$app->get('/error', 'PageController@error');
+$app->get('/bad-browser', 'PageController@browser');

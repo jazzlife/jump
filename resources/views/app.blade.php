@@ -32,7 +32,8 @@
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/string-format/0.5.0/string-format.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js') }}"></script>
-    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/store.js/1.3.20/store.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.runtime.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.0/vue-router.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js') }}"></script>

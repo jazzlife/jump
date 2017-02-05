@@ -400,7 +400,11 @@ Mail support was removed from Lumen, but in Jump we bring in back. Usage is the 
 
 #### RequestToken Manager
 
-In Jump, every AJAX request must be signed with a Token. 
+In Jump, we divided routes in two categories: `web` and `api` routes.
+
+The `web` routes are located at `/routes/web.php` and are regular routes which can be visited by users from the browser.
+
+The `api` routes are located at `/routes/api.php` and all requests to these routes should be signed with a *Request Token*. Requests to these routes should be made with `XMLHttpRequest` from the client side to perform any operations on the server side.
 
 RequestToken Manager is already integrated and configured in Jump and every request made with *Axios* is signed with the right Token.
 
@@ -422,11 +426,6 @@ app('request-token')->get();
 // Validates a Token.
 app('request-token')->validate('TOKEN');
 ```
-
-###### Routes:
-
-- Routes which should be signed with a Token must be placed in `/routes/api.php` file.
-- Routes which can be both signed and not signed with a Token must be placed in `/routes/web.php` file.
 
 > See tests for more details.
 

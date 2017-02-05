@@ -108,14 +108,14 @@ collect(config('app.providers'))->each(function ($provider) use ($app) {
 $app->group([
     'prefix' => 'api',
     'namespace' => 'App\Http\Controllers',
-    'middleware' => ['throttle:60,1', 'token:strict'],
+    'middleware' => ['throttle:60,1', 'token'],
 ], function ($app) {
     require __DIR__ . '/../routes/api.php';
 });
 
 $app->group([
     'namespace' => 'App\Http\Controllers',
-    'middleware' => ['throttle:120,1', 'token'],
+    'middleware' => ['throttle:120,1'],
 ], function ($app) {
     require __DIR__ . '/../routes/web.php';
 });

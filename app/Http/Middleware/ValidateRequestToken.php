@@ -12,28 +12,16 @@ class ValidateRequestToken
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
-     * @param  string|null              $strict
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $strict = null)
+    public function handle($request, Closure $next)
     {
-        if ($strict === 'strict') {
-
-            if (!$request->ajax()) {
-
-                return response('Bad Request.', 400);
-            }
+        if (!RequestToken::validate($token = $request->header('token'))) {
+            return response('Bad Request.', 400);
         }
 
-        if ($request->ajax()) {
-
-            if (!RequestToken::validate($request->header('token'))) {
-                return response('Invalid Request Token.', 400);
-            }
-
-            RequestToken::set($request->header('token'));
-        }
+        RequestToken::set($token);
 
         return $next($request);
     }
