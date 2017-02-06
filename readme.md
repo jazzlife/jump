@@ -35,6 +35,7 @@
         - [Babel ES6 Polyfills](#babel-es6-polyfills)
         - [String-Format](#string-format)
         - [Axios](#axios)
+        - [Store](#store)
         - [FastClick](#fastclick)
         - [NormalizeCSS](#normalizecss)
 - Custom Classes & Features
@@ -321,6 +322,14 @@ A small JavaScript library used to format strings.
 Axios is a Promise based HTTP client used to make HTTP requests.
 
 - [Axios Docs](https://github.com/mzabriskie/axios)
+
+<br>
+
+#### Store
+
+Store.js is a localStorage wrapper for all browsers without using cookies or flash.
+
+- [Store Docs](https://github.com/marcuswestin/store.js)
 
 <br>
 
