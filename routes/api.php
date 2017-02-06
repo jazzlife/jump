@@ -11,4 +11,5 @@
 |
 */
 
-//
+$app->post('/login', 'Auth\\AuthController@store');
+$app->post('/logout', 'Auth\\AuthController@destroy');

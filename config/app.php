@@ -27,6 +27,7 @@ return [
     'providers' => [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
         Vluzrmos\Tinker\TinkerServiceProvider::class,
         Sentry\SentryLaravel\SentryLumenServiceProvider::class,
