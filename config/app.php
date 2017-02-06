@@ -42,7 +42,8 @@ return [
     ],
 
     'route_middleware' => [
-        'token' => App\Http\Middleware\ValidateRequestToken::class,
+        'auth'     => App\Http\Middleware\Authenticate::class,
+        'token'    => App\Http\Middleware\ValidateRequestToken::class,
         'throttle' => App\Http\Middleware\ThrottleRequests::class,
     ],
 

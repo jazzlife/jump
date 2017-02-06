@@ -18,6 +18,7 @@ class ValidateRequestToken
     public function handle($request, Closure $next)
     {
         if (!RequestToken::validate($token = $request->header('token'))) {
+
             return response('Bad Request.', 400);
         }
 
