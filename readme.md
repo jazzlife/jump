@@ -426,7 +426,7 @@ axios.post('/api/logout');
 
 > Only one active session pe user is allowed.
 
-For more details see `/resources/assets/js/bootstrap.js`
+For more details see `/resources/assets/js/axios/index.js`
 
 <br>
 
