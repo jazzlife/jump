@@ -86,7 +86,6 @@ trait Authenticable
         return static::where('auth_token', $token)->project([
             'logins'   => 0,
             'attempts' => 0,
-            'logs'     => 0,
         ])->first();
     }
 
