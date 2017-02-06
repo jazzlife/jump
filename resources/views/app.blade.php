@@ -41,5 +41,8 @@
 
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js') }}"></script>
     <script>FastClick.attach(document.body);</script>
+
+    @include('trackers.analytics')
+    @include('trackers.pixel')
 </body>
 </html>
