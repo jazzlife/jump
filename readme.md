@@ -43,6 +43,7 @@
     - [Multiple Languages](#multiple-languages)
     - [Detect Crawlers](#detect-crawlers)
     - [Mail Support](#mail-support)
+    - [User Authentication Support](#user-authentication-support)
     - [RequestToken Manager](#requesttoken-manager)
     - [Request Throttling](#request-throttling)
     - [Data Manager](#data-manager)
@@ -404,6 +405,28 @@ Mail support was removed from Lumen, but in Jump we bring in back. Usage is the 
 - [Laravel Mail Docs](https://laravel.com/docs/5.3/mail)
 
 > In Jump, default mail driver is set to *mailgun*
+
+<br>
+
+#### User Authentication Support
+
+In Jump, we've added support to a custom user authentication mechanism.
+
+To **authenticate** an user just send a `POST` request with *Axios* to `/api/login` with `email` and `password` fields. If credentials are valid, then all future requests made with *Axios* will have user authentication token and Jump will internally authenticate the user for you. To access authenticated user use `app('auth')->user()` method.
+
+```javascript
+axios.post('/api/login', { email: '<email>', password: '<password>' });
+```
+
+To **deauthenticate** an user send a `POST` request with *Axios* to `/api/logout`.
+
+```javascript
+axios.post('/api/logout');
+```
+
+> Only one active session pe user is allowed.
+
+For more details see `/resources/assets/js/bootstrap.js`
 
 <br>
 

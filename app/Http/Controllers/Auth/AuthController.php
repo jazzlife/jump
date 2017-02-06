@@ -22,7 +22,7 @@ class AuthController extends Controller
 
             Auth::user()->logout();
 
-            return response(null)->header('Guest', '1');
+            return response([ 'message' => trans('auth.invalid-credentials') ], 401)->header('Guest', '1');
         }
 
         $this->validate($request, [
@@ -37,7 +37,7 @@ class AuthController extends Controller
             return response(null)->header('User', $user->auth_token);
         }
 
-        return response(null, 401);
+        return response([ 'message' => trans('auth.invalid-credentials') ], 401);
     }
 
     /**
