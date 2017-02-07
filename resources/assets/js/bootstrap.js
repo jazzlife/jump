@@ -1,9 +1,4 @@
 
-
-
-
-
-
 /**
  * Load Axios configuration.
  */
