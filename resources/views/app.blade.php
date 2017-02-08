@@ -9,7 +9,9 @@
         <link rel="alternate" href="{{ url_add_locale(app('request')->fullUrl(), $locale) }}" hreflang="{{ $locale }}">
     @endforeach
 
-    <link rel="stylesheet" href="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,700&subset=cyrillic">
+
+    <link rel="stylesheet" href="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.9/css/uikit.css') }}">
     <link rel="stylesheet" href="{{ asset()->url('/css/bundle.css') }}">
 
     <style>{!! asset()->css() !!}</style>
@@ -37,6 +39,8 @@
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.runtime.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.0/vue-router.js') }}"></script>
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js') }}"></script>
+    <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.9/js/uikit.js') }}"></script>
     <script src="{{ asset()->url('/js/bundle.js') }}"></script>
 
     <script src="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js') }}"></script>

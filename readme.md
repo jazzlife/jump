@@ -37,7 +37,8 @@
         - [Axios](#axios)
         - [Store](#store)
         - [FastClick](#fastclick)
-        - [NormalizeCSS](#normalizecss)
+        - [jQuery](#jquery)
+        - [UIKit 3](#uikit-3)
 - Custom Classes & Features
     - [Sentry Error Reporting](#sentry-error-reporting)
     - [Multiple Languages](#multiple-languages)
@@ -342,11 +343,19 @@ FastClick is a polyfill to remove click delays on browsers with touch UIs.
 
 <br>
 
-#### NormalizeCSS
+#### jQuery
 
-NormalizeCSS makes browsers render all elements more consistently and in line with modern standards.
+jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
-- [More Details about NormalizeCSS](http://nicolasgallagher.com/about-normalize-css/)
+- [jQuery Docs](http://api.jquery.com/)
+
+<br>
+
+#### UIKit 3
+
+A lightweight and modular front-end framework for developing fast and powerful web interfaces.
+
+- [UIKit Docs](https://getuikit.com/docs/introduction)
 
 <br>
 
