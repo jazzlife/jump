@@ -25,6 +25,9 @@ module.exports = {
     stylus: {
         use: [
             require('rupture')()
+        ],
+        import: [
+            __dirname + '/resources/assets/stylus/bootstrap'
         ]
     }
 }
