@@ -9,6 +9,8 @@
         <link rel="alternate" href="{{ url_add_locale(app('request')->fullUrl(), $locale) }}" hreflang="{{ $locale }}">
     @endforeach
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,700&subset=cyrillic">
 
     <link rel="stylesheet" href="{{ cdnjs('https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.9/css/uikit.css') }}">
